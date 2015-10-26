@@ -24,7 +24,7 @@ Use this to create a video. For example: `pymusanim.sh mysong.mid mysong` will c
 
     ./batch.sh midisDirectory [threadsLimit]
 
-Use this one if you want to create several videos at once. Since PyMusAnim is single-threaded this will let you take advantage of a multi-core CPU if you have one (and you probably do). `midisDirectory` is the directory you have your MIDI files on and  threadsLimit` is an optional argument to explicitally set the number of threads to use (if not set the program will use all available processors). For each MIDI file a sub-directoy will be created inside the `output` folder, which will be created if it doesn't exist. For example: `batch.sh mymidis/`
+Use this one if you want to create several videos at once. Since PyMusAnim is single-threaded this will let you take advantage of a multi-core CPU if you have one (and you probably do). `midisDirectory` is the directory you have your MIDI files on and `threadsLimit` is an optional argument to explicitally set the number of threads to use (if not set the program will use all available processors). For each MIDI file a sub-directoy will be created inside the `output` folder, which will be created if it doesn't exist. For example: `batch.sh mymidis/`
 
 Remember to run all these commands from the project's root directory.
 
