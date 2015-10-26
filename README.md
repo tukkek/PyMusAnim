@@ -1,10 +1,12 @@
-PyMusAnim, a clone of Stephen Malinowski's Music Animation Machine in Python
+#PyMusAnim
+
+A clone of Stephen Malinowski's Music Animation Machine in Python
 
 This fork extends PyMusAnim so that Linux users can easily output a MPG video given an input MIDI file, using a command-line tool.
 
 The original Music Animaion Machine and it's open source clone, PyMusAnim, are awesome. Unfortunately though the original project was never open source and ran poorly, on Windows and couldn't create video files by itself. PyMusAnim, using a totally different approach, doesn't suffer from performance issues - but it's orginally more of a proof of concept than a functioning tool. 
 
-== DEPENDENCIES ==
+## Dependencies
 
 You need those external programs installed on your system for this fork to work:
 
@@ -14,7 +16,7 @@ You need those external programs installed on your system for this fork to work:
 
 On Debian and Ubuntu you can fulfill these requirementes by running the following command: `sudo apt-get install ffmpeg timidity python2.6`
 
-== HOW IT WORKS ==
+## How it works
 
 The core of PyMusAnim is virtually unchanged, the only difference being that instead of having to create your own Python configuration files the new module MusAnimLauncher does that for you (while still being configurable). This module is automatically called from two Linux command line (bash) utilities:
 
@@ -28,7 +30,7 @@ Use this one if you want to create several videos at once. Since PyMusAnim is si
 
 Remember to run all these commands from the project's root directory.
 
-== A NOTE ABOUT PYMUSANIM AND MIDI FILES ==
+## A note about PyMusAnim and MIDI files
 
 Unfortunately PyMusAnim is pretty bad at reading MIDI files in weird formats. I would go as far as to say that it's unable to read most MIDI files found on the web. The good news is that as long as the file is well formatted it will work perfectly.
 
@@ -38,7 +40,7 @@ I have found that if I have trouble opening a MIDI file then I can use TuxGuitar
 
 I haven't tried but other programs with MIDI import and export features could potentially work for this as well.
 
-== LINKS ==
+## Links
 
 Original PyMusAnim: https://github.com/zhanrnl/PyMusAnim
 PyMusAnim on YouTube: https://www.youtube.com/user/PyMusAnim
@@ -46,7 +48,7 @@ Original Music Animation Machine by Stephen Malinowski: http://www.musanim.com/p
 Malinowski on YouTube https://www.youtube.com/user/smalin
 TuxGuitar: http://tuxguitar.herac.com.ar/ (also available via `sudo apt-get install tuxguitar` )
 
-== TO DO ==
+## To do
 
 * Improve support for reading all formats of MIDI files (this would be huge, if you think you can help please contact me!)
 * Make PyMusAnim run on Python 3 too (should be pretty easy)
