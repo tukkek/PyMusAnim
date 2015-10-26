@@ -1,6 +1,7 @@
+
 #PyMusAnim
 
-A clone of Stephen Malinowski's Music Animation Machine in Python
+A clone of Stephen Malinowski's Music Animation Machine in Python.
 
 This fork extends PyMusAnim so that Linux users can easily output a MPG video given an input MIDI file, using a command-line tool.
 
@@ -43,9 +44,13 @@ I haven't tried but other programs with MIDI import and export features could po
 ## Links
 
 Original PyMusAnim: https://github.com/zhanrnl/PyMusAnim
+
 PyMusAnim on YouTube: https://www.youtube.com/user/PyMusAnim
+
 Original Music Animation Machine by Stephen Malinowski: http://www.musanim.com/player/
+
 Malinowski on YouTube https://www.youtube.com/user/smalin
+
 TuxGuitar: http://tuxguitar.herac.com.ar/ (also available via `sudo apt-get install tuxguitar` )
 
 ## To do
