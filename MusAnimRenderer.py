@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import sys
 import colorsys
@@ -7,6 +8,8 @@ from collections import deque
 from MusAnimLexer import MidiLexer
 
 class MusAnimRenderer:
+    first_highlight = False
+  
     def lyrics_deque(self, lyrics):
         """Turns lyrics as a string into a lyrics deque, splitting by spaces and
         removing newlines."""
@@ -175,6 +178,7 @@ class MusAnimRenderer:
         if block['start_x'] < (dimensions[0] / 2) and (block['end_x'] >
             (dimensions[0] / 2)):
             color = tracks[block['track_num']]['high_color']
+            self.first_highlight = True
         else:
             color = tracks[block['track_num']]['color']
         if transparent:
@@ -217,9 +221,21 @@ class MusAnimRenderer:
         cr.move_to(*corner)
         cr.show_text(text)
 
-    def render(self, input_midi_filename, frame_save_dir, tracks, speed_map=[{'time':0.0,'speed':4}],
-        dimensions=(720,480), fps=29.97, min_pitch=34, max_pitch=86, first_frame=None,
-        last_frame=None, every_nth_frame=1, do_render=1):
+    speed_map=[{'time':0.0,'speed':4}]
+    width=720
+    height=480
+    fps=29.97
+    min_pitch=34
+    max_pitch=86
+    first_frame=None
+    last_frame=None
+    every_nth_frame=1
+    do_render=1
+    introduction=True
+  
+    def render(self, input_midi_filename, frame_save_dir, tracks, speed_map=speed_map,
+        dimensions=(width,height), fps=fps, min_pitch=min_pitch, max_pitch=max_pitch, first_frame=first_frame,
+        last_frame=last_frame, every_nth_frame=every_nth_frame, do_render=do_render):
         """Render the animation!"""
 
         print "Beginning render..."
@@ -261,6 +277,7 @@ class MusAnimRenderer:
 
         # for naming image files:
         frame = 0
+        framefile = 0
         # for keeping track of speed changes:
         # need to initialize time
         time = -dimensions[0]/(2.0*fps*speed_map[0]['speed'])
@@ -275,7 +292,7 @@ class MusAnimRenderer:
             # code only for rendering blocks
             if frame >= first_frame and frame <= last_frame and frame % every_nth_frame == 0:
                 # cairo setup stuff
-                filename = frame_save_dir + ("frame%05i.png" % frame)
+                filename = frame_save_dir + ("frame%05i.png" % framefile)
                 surface = cairo.ImageSurface(cairo.FORMAT_RGB24, *dimensions)
                 #surface = cairo.SVGSurface(filename, *dimensions)
                 cr = cairo.Context(surface)
@@ -322,7 +339,9 @@ class MusAnimRenderer:
                         self.draw_lyrics_cairo(block, tracks, dimensions, cr)
 
                 #cr.save()
-                surface.write_to_png(filename)
+                if self.introduction or self.first_highlight:
+		  framefile += 1
+		  surface.write_to_png(filename)
 
             # other code needed to advance animation
             frame += 1
