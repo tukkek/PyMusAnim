@@ -58,3 +58,5 @@ TuxGuitar: http://tuxguitar.herac.com.ar/ (also available via `sudo apt-get inst
 * Improve support for reading all formats of MIDI files (this would be huge, if you think you can help please contact me!)
 * Make PyMusAnim run on Python 3 too (should be pretty easy)
 * A simple visual interface (GUI) so that it would be even easier to create PyMusAnim videos
+* There is a issue with file paths containing whitespace not loading properly
+* There may be an issue in batch mode with Timidity blocking the virtual MIDI device, rendering some videos silent but it doesn't seem to happen often
