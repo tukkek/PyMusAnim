@@ -1,16 +1,24 @@
 #!/bin/bash
 # given the same parameters as PyMusAnimLauncher, runs the whole process of creating a video
-function doNow() {
+function checktime() {
   now=`date +%s`
 }
 
-doNow;allStart=$now
-python MusAnimLauncher.py $*
 if [ ! $? == 0 ]; then
-  echo "usage: ./pymusanim.sh [file.mid] [output directory name]"
+  echo "Usage: ./pymusanim.sh file.mid outputdirectory/"
   exit 1
 fi
-timidity $1 -Ov -o $2/a.ogg
+name=`basename $1 .${1#*.}`
+if [[ "$1" =~ \ |\' ]]; then
+  echo "Found an illegal character in this path, please rename: $1"
+  exit
+fi
+
+checktime;allStart=$now
+python MusAnimLauncher.py $*
+cp $1 $2
+timidity $1 -Ov -o $2/${name}.ogg
 cd $2
-ffmpeg -f image2 -i frame%5d.png -i a.ogg -sameq a.mpg #sameq is same_quant in upstream
-doNow;echo "Total time: $((($now-$allStart)/60)) minutes"
+ffmpeg -f image2 -i frame%5d.png -i ${name}.ogg -sameq ${name}.mpg #sameq is same_quant in upstream
+rm *.png
+checktime;echo "Total time: $((($now-$allStart)/60)) minutes"

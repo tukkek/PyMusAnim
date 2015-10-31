@@ -14,7 +14,7 @@ if [ ! $? == 0 ]; then
   echo "No files found, aborting."
   exit
 fi
-for m in $1/*.mid*; do
+for m in $1/*.mid*; do #call pymusanim if there is an idle thread
   name=`basename $m .${m#*.}`
   nice -n19 ./pymusanim.sh $m $OUT_DIR$name &> $OUT_DIR${name}.log&
   echo "Starting $name"
@@ -26,7 +26,12 @@ for m in $1/*.mid*; do
     sleep 1
   done
 done
+echo "Waiting for last processes to finish..."
+while [ `jobs|grep Running|wc -l` != 0 ]; do #wait until end
+  sleep 1 
+done
+echo "Cleaning..."
 wait
-echo "Done"
+echo "Done!"
 first=1
 ./checklogs.sh $OUT_DIR
