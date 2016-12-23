@@ -47,6 +47,10 @@ I have found that if I have trouble opening a MIDI file then I can use TuxGuitar
 
 I haven't tried but other programs with MIDI import and export features could potentially work for this as well.
 
+## FreePats
+
+FreePats is the libre soundbank that is used by Timidity and other Linux MIDI software. Despite doing a great job of allowing you to play most MIDI files for free, it can be a bit quirky and unfortunately isn't updated very often. You can see some hacks around its shortcomings on the 'freepats' directory. If you happen to know of any others hacks or good alternative libre soundbanks, let me know!
+
 ## Links
 
 Original PyMusAnim: https://github.com/zhanrnl/PyMusAnim
@@ -58,6 +62,8 @@ Original Music Animation Machine by Stephen Malinowski: http://www.musanim.com/p
 Malinowski on YouTube https://www.youtube.com/user/smalin
 
 TuxGuitar: http://tuxguitar.herac.com.ar/ (also available via `sudo apt-get install tuxguitar` )
+
+FreePats http://freepats.zenvoid.org/
 
 ## To do
 
