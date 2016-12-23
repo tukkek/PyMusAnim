@@ -141,7 +141,7 @@ def main():
     ]
 
     if len(sys.argv)<3:
-      print("Usage: python MusAnimLauncher.py input.mid outputDirectory")
+      print("Usage: python MusAnimLauncher.py input.mid outputDirectory [--dynamic]")
       sys.exit(1)
       return
 
@@ -152,6 +152,8 @@ def main():
 
     frames_dir = sys.argv[2]+os.sep
     os.makedirs(frames_dir)
+    
+    dynamic=len(sys.argv)>=4 and sys.argv[3]=='--dynamic'
 
     speed_map = [{'time': 0.0, 'speed': 4}]
 
@@ -164,12 +166,7 @@ def main():
 
     renderer=MusAnimRenderer()
     renderer.introduction=False
-    renderer.render(mid, frames_dir, tracks,
-      speed_map=speed_map,
-      dimensions=dimensions,
-      min_pitch=lexer.minPitch-PITCH_GRACE,
-      max_pitch=lexer.maxPitch+PITCH_GRACE,
-      fps=fps)
+    renderer.render(mid,frames_dir,tracks,speed_map=speed_map,dimensions=dimensions,min_pitch=lexer.minPitch-PITCH_GRACE,max_pitch=lexer.maxPitch+PITCH_GRACE,fps=fps,dynamicmode=dynamic)
 
 if __name__ == '__main__':
     main()

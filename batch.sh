@@ -5,7 +5,11 @@ OUT_DIR=output/
 shopt -s nocaseglob
 trap 'kill 0' EXIT
 if [ ! $1 ]; then
-  echo "Usage: batch.sh midisDirectory [threadsLimit]"
+  echo "Usage: batch.sh midisDirectory mode [threadsLimit]"
+  exit 1
+fi
+if [ ! $2 ]; then
+  echo "Please inform a mode: either --classic or --dynamic"
   exit 1
 fi
 mkdir $OUT_DIR
@@ -16,9 +20,9 @@ if [ ! $? == 0 ]; then
 fi
 for m in $1/*.mid*; do #call pymusanim if there is an idle thread
   name=`basename $m .${m#*.}`
-  nice -n19 ./pymusanim.sh $m $OUT_DIR$name &> $OUT_DIR${name}.log&
+  nice -n19 ./pymusanim.sh $m $OUT_DIR$name $2 &> $OUT_DIR${name}.log&
   echo "Starting $name"
-  threadsLimit=$2
+  threadsLimit=$3
   if [ ! $threadsLimit ]; then
     threadsLimit=`cat /proc/cpuinfo | grep processor | wc -l`
   fi

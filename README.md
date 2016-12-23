@@ -21,15 +21,21 @@ On Debian and Ubuntu you can fulfill these requirementes by running the followin
 
 The core of PyMusAnim is virtually unchanged, the only difference being that instead of having to create your own Python configuration files the new module MusAnimLauncher does that for you (while still being configurable). This module is automatically called from two Linux command line (bash) utilities:
 
-    ./pymusanim.sh [file.mid] [output directory name]
+    ./pymusanim.sh file.mid outputdirectory [--dynamic]
 
 Use this to create a video. For example: `pymusanim.sh mysong.mid mysong` will create a MPG file of `mysong.mid` inside the directory `mysong`.
 
-    ./batch.sh midisDirectory [threadsLimit]
+    ./batch.sh midisDirectory mode [threadsLimit]
 
 Use this one if you want to create several videos at once. Since PyMusAnim is single-threaded this will let you take advantage of a multi-core CPU if you have one (and you probably do). `midisDirectory` is the directory you have your MIDI files on and `threadsLimit` is an optional argument to explicitally set the number of threads to use (if not set the program will use all available processors). For each MIDI file a sub-directoy will be created inside the `output` folder, which will be created if it doesn't exist. For example: `batch.sh mymidis/`
 
 Remember to run all these commands from the project's root directory.
+
+## Dynamic mode
+
+This fork adds a new rendering mode that can be activated by passing the argument --dynamic as the last argument to `MusAnimLauncher.py` or `pymusanim.sh`. Note that when running `batch.sh` you'll always need to inform which mode you're using (either `--classic` or `--dynamic`).
+
+This mode tries to mimic somewhat the "shapes mode" of the original Music Animation Machine and focuses more on enhancing what's being played at each moment than on having a wider view of the composition being played.
 
 ## A note about PyMusAnim and MIDI files
 
