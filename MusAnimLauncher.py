@@ -151,7 +151,8 @@ def main():
     lexer.lex(mid)
 
     frames_dir = sys.argv[2]+os.sep
-    os.makedirs(frames_dir)
+    if not os.path.isdir(frames_dir):
+        os.makedirs(frames_dir)
     
     dynamic=len(sys.argv)>=4 and sys.argv[3]=='--dynamic'
 

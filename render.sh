@@ -28,5 +28,5 @@ type mscore 2&>/dev/null;musescore=$?
 type timidity 2&>/dev/null;timidity=$?
 if [ $# == 0 ]; then echo "Usage: ./render.sh partialdirectory/"; exit 2; fi
 cd $1
-#record
+record
 merge
