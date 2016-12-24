@@ -11,11 +11,12 @@ The original Music Animaion Machine and it's open source clone, PyMusAnim, are a
 
 You need those external programs installed on your system for this fork to work:
 
-  * Python 2
-  * Timidity
-  * FFMpeg
+  * Python 2 https://www.python.org/
+  * Timidity http://timidity.sourceforge.net/
+  * FFMpeg https://ffmpeg.org/
+  * MuseScore (optional) https://musescore.com/
 
-On Debian and Ubuntu you can fulfill these requirementes by running the following command: `sudo apt-get install ffmpeg timidity python2.6`
+On Debian and Ubuntu you can fulfill these requirementes by running the following command: `sudo apt-get install ffmpeg timidity python2.6 musescore`
 
 ## How it works
 
@@ -37,7 +38,13 @@ This fork adds a new rendering mode that can be activated by passing the argumen
 
 This mode tries to mimic somewhat the "shapes mode" of the original Music Animation Machine and focuses more on enhancing what's being played at each moment than on having a wider view of the composition being played.
 
-## A note about PyMusAnim and MIDI files
+## MuseScore
+
+MuseScore is a great composition tool and offers a few featuress that work very well with PyMusAnim - namely being able to convert unsupported MIDI files into a supported format and also the ability to render them as audio files with higher quality than other tools. It is suggested that you install MuseScore in your system and, if you do then PyMusAnim will take full advantage of it when possible. Having it installed should help you automatically circumvent the issues detailed below.
+
+## Issues
+
+### A note about PyMusAnim and MIDI files
 
 Unfortunately PyMusAnim is pretty bad at reading MIDI files in weird formats. I would go as far as to say that it's unable to read most MIDI files found on the web. The good news is that as long as the file is well formatted it will work perfectly.
 
@@ -47,7 +54,7 @@ I have found that if I have trouble opening a MIDI file then I can use TuxGuitar
 
 I haven't tried but other programs with MIDI import and export features could potentially work for this as well.
 
-## FreePats
+### FreePats
 
 FreePats is the libre soundbank that is used by Timidity and other Linux MIDI software. Despite doing a great job of allowing you to play most MIDI files for free, it can be a bit quirky and unfortunately isn't updated very often. You can see some hacks around its shortcomings on the 'freepats' directory. If you happen to know of any others hacks or good alternative libre soundbanks, let me know!
 
