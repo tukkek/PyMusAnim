@@ -108,7 +108,7 @@ class MusAnimRenderer:
             #block['start_x'] = round(block['start_x'])
 
         # sort by track_num so we get proper melisma length counting
-        blocks.sort(lambda a, b: cmp(a['track_num'], b['track_num']))
+        blocks.sort(key=lambda a: a['track_num'])
 
         # can't add lyrics until we add in end_x for all blocks
         block_num = 0
@@ -140,7 +140,7 @@ class MusAnimRenderer:
             block_num += 1
 
         # go back to sorting by start time
-        blocks.sort(lambda a, b: cmp(a['start_time'], b['start_time']))
+        blocks.sort(key=lambda a: a['start_time'])
 
         return blocks, last_block_end
 
@@ -238,24 +238,24 @@ class MusAnimRenderer:
     do_render=1
     introduction=True
   
-    def render(self, input_midi_filename, frame_save_dir, tracks, speed_map=speed_map,dimensions=(width,height), fps=fps, min_pitch=min_pitch, max_pitch=max_pitch, first_frame=first_frame,last_frame=last_frame, every_nth_frame=every_nth_frame, do_render=do_render,dynamicmode=False):
+    def render(self, input_midi_filename, frame_save_dir, tracks, speed_map=speed_map,dimensions=(width, height), fps=fps, min_pitch=min_pitch, max_pitch=max_pitch, first_frame=first_frame,last_frame=last_frame, every_nth_frame=every_nth_frame, do_render=do_render,dynamicmode=False):
         self.dynamicmode=dynamicmode
         """Render the animation!"""
-        print "Beginning render..."
+        print("Beginning render...")
         speed = speed_map[0]['speed']
         if first_frame == None:
             first_frame = 0
         if last_frame == None:
             last_frame = 10000000 # just a large number
 
-        print "Lexing midi..."
+        print("Lexing midi...")
         blocks = []
         lexer = MidiLexer()
         midi_events = lexer.lex(input_midi_filename)
 
-        print "Blockifying midi..."
+        print("Blockifying midi...")
         blocks = self.blockify(midi_events) # convert into list of blocks
-        print str(len(blocks))+" blocks"
+        print(str(len(blocks))+" blocks")
 
         for track in tracks:
             if 'color' in track:
@@ -277,7 +277,7 @@ class MusAnimRenderer:
         last_percent = -1
 
         # sort by z-index descending
-        blocks.sort(lambda a, b: cmp(b['z-index'], a['z-index']))
+        blocks.sort(key=lambda a: a['z-index'],reverse=True)
 
         # for naming image files:
         frame = 0
@@ -287,10 +287,10 @@ class MusAnimRenderer:
         time = -dimensions[0]/(2.0*fps*speed_map[0]['speed'])
 
         if not do_render:
-            print "Skipping render pass, Done!"
+            print("Skipping render pass, Done!")
             return
 
-        print "Rendering frames..."
+        print("Rendering frames...")
         # generate frames while there are blocks on the screen:
         while last_block_end > -speed:
             # code only for rendering blocks
@@ -313,7 +313,7 @@ class MusAnimRenderer:
                 on_screen_blocks = [block for block in blocks
                     if block['start_x'] < dimensions[0]]
                 
-                for layer in set([block['layer'] for block in on_screen_blocks]):
+                for layer in {block['layer'] for block in on_screen_blocks}:
                     layer_surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, *dimensions)
                     layer_context = cairo.Context(layer_surface)
                     
@@ -321,7 +321,7 @@ class MusAnimRenderer:
                         
                     # do first drawing pass
                     for block in in_layer_blocks:
-                        block=self.makedynamic(block,dimensions)
+                        block=self.makedynamic(block, dimensions)
                         if block==None:
                           continue
                         self.draw_block_cairo(block, tracks, dimensions, layer_context)
@@ -329,7 +329,7 @@ class MusAnimRenderer:
                     # do second drawing pass
                     on_screen_blocks.reverse()
                     for block in in_layer_blocks:
-                        block=self.makedynamic(block,dimensions)
+                        block=self.makedynamic(block, dimensions)
                         if block==None:
                           continue
                         self.draw_block_cairo(block, tracks, dimensions, layer_context, transparent=True)
@@ -338,14 +338,14 @@ class MusAnimRenderer:
                     cr.paint()
 
                 # do lyrics pass, sort by start x so starts of words are on top
-                on_screen_blocks.sort(lambda a, b: cmp(a['start_x'], b['start_x']))
+                on_screen_blocks.sort(key=lambda a: a['start_x'])
                 for block in on_screen_blocks:
                     if ('lyrics' in block):
                         self.draw_lyrics_cairo(block, tracks, dimensions, cr)
 
                 if self.introduction or self.first_highlight:
-		  framefile += 1
-		  surface.write_to_png(filename)
+                    framefile += 1
+                    surface.write_to_png(filename)
 
             # other code needed to advance animation
             frame += 1
@@ -365,15 +365,15 @@ class MusAnimRenderer:
             percent = min(int((original_end - last_block_end) * 100.0
                 / original_end), 100)
             if percent != last_percent:
-                print percent, "% done"
+                print(percent, "% done")
             last_percent = percent
 
             time += (1/fps)
 
-        print "Done!"
+        print("Done!")
 
 
-    def makedynamic(self,block,dimensions):
+    def makedynamic(self, block, dimensions):
         if self.dynamicmode:
           middle=dimensions[0] / 2
           if block['start_x'] > middle:
